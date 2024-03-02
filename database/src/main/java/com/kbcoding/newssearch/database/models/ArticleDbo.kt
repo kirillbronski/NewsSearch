@@ -9,7 +9,7 @@ import java.util.Date
 @Entity(tableName = "articles")
 data class ArticleDbo(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo("source") @Embedded val source: SourceDbo,
+    @Embedded("source.") val source: SourceDbo,
     @ColumnInfo("author") val author: String,
     @ColumnInfo("title") val title: String,
     @ColumnInfo("description") val description: String,

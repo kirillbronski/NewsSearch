@@ -1,8 +1,9 @@
-package com.kbcoding.newssearch.features.main_screen.domain.models
+package com.kbcoding.newssearch.news_data.models
 
 import java.util.Date
 
 data class Article(
+    val id: Long,
     val source: Source,
     val author: String,
     val title: String,

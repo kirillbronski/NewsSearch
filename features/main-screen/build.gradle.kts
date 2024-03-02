@@ -54,6 +54,7 @@ dependencies {
 
     implementation(projects.database)
     implementation(projects.newsApi)
+    implementation(projects.newsData)
 
     testImplementation(libs.junit)
 
