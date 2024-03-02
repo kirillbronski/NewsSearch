@@ -18,12 +18,12 @@ import retrofit2.http.Query
 import java.util.Date
 
 /**
- * API Documentation [here](https://newsapi.org/docs/get-started)
+ * API Documentation [here] (https://newsapi.org/docs/get-started)
  */
 interface NewsApi {
 
     /**
-     * API details [here](https://newsapi.org/docs/endpoints/everything)
+     * API details [here] (https://newsapi.org/docs/endpoints/everything)
      */
     @GET("/everything")
     suspend fun everything(

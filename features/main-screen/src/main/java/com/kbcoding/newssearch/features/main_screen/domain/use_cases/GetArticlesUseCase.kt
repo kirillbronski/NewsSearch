@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class GetArticlesUseCase(
     private val repository: ArticlesRepository
 ) {
-    suspend operator fun invoke(): RequestResult<Flow<List<Article>>> {
+    suspend operator fun invoke(): Flow<RequestResult<List<Article>>> {
         return repository.getArticles()
     }
 }
