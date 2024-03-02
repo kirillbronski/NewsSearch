@@ -1,4 +1,4 @@
-package com.kbcoding.newsapi.utils
+package com.kbcoding.newssearch.news_api.utils
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

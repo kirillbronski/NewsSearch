@@ -1,4 +1,4 @@
-package com.kbcoding.newsapi.models
+package com.kbcoding.newssearch.news_api.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

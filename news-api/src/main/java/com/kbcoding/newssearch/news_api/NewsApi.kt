@@ -1,12 +1,12 @@
-package com.kbcoding.newsapi
+package com.kbcoding.newssearch.news_api
 
 import androidx.annotation.IntRange
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.kbcoding.newsapi.models.ArticleDto
-import com.kbcoding.newsapi.models.LanguageDto
-import com.kbcoding.newsapi.models.ResponseDto
-import com.kbcoding.newsapi.models.SortByDto
-import com.kbcoding.newsapi.utils.NewsApiKeyInterceptor
+import com.kbcoding.newssearch.news_api.models.ArticleDto
+import com.kbcoding.newssearch.news_api.models.LanguageDto
+import com.kbcoding.newssearch.news_api.models.ResponseDto
+import com.kbcoding.newssearch.news_api.models.SortByDto
+import com.kbcoding.newssearch.news_api.utils.NewsApiKeyInterceptor
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType

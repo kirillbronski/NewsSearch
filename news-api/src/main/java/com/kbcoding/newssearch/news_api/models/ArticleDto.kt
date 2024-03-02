@@ -1,6 +1,6 @@
-package com.kbcoding.newsapi.models
+package com.kbcoding.newssearch.news_api.models
 
-import com.kbcoding.newsapi.utils.DateTimeUtcSerializer
+import com.kbcoding.newssearch.news_api.utils.DateTimeUtcSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.Date

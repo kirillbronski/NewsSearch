@@ -1,4 +1,4 @@
-package com.kbcoding.newsapi.utils
+package com.kbcoding.newssearch.news_api.utils
 
 import okhttp3.Interceptor
 import okhttp3.Response
