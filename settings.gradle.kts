@@ -24,3 +24,4 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "NewsSearch"
 include(":app")
 include(":newsApi")
+include(":database")

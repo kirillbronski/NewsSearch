@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  * "articles": [ _ ]
  */
 @Serializable
-data class Response<E>(
+data class ResponseDto<E>(
     @SerialName("status") val status: String,
     @SerialName("totalResult") val totalResult: Int,
     @SerialName("articles") val articles: List<E>,
