@@ -29,30 +29,25 @@ class ArticlesRepositoryImpl(
         }
 
         return flow {
-            emit(RequestResult.InProgress(cachedAllArticles))
+            //emit(RequestResult.InProgress(cachedAllArticles))
         }
     }
 
-    private fun getArticlesFromApi(): Flow<RequestResult<List<ArticleDbo>>> {
+    private fun getArticlesFromApi(): Flow<RequestResult<ResponseDto<ArticleDto>>> {
         return flow { emit(api.everything()) }
-            .map { result ->
-                if (result.isSuccess) {
-                    val response: ResponseDto<ArticleDto> = result.getOrThrow()
-                    RequestResult.Success(response.articles)
-                } else {
-                    RequestResult.Error(result.exceptionOrNull())
+            .map { result -> result.toRequestResult() }
+            .onEach { requestResult ->
+                if (requestResult is RequestResult.Success) {
+                    saveApiResponseToCache(checkNotNull(requestResult.data).articles)
                 }
             }
-            .filterIsInstance<RequestResult.Success<List<ArticleDto>>>()
-            .map { requestResult ->
-                requestResult.map { articleDtoList ->
-                    articleDtoList.map { articleDto ->
-                        articleDto.toArticleDbo()
-                    }
-                }
-            }.onEach {
-                db.articlesDao.saveArticles(it.data)
-            }
+    }
+
+    private suspend fun saveApiResponseToCache(articlesDtos: List<ArticleDto>) {
+        val articlesDbos = articlesDtos.map { articleDto ->
+            articleDto.toArticleDbo()
+        }
+        db.articlesDao.saveArticles(articlesDbos)
     }
 
     private fun getArticlesFromDb(): Flow<RequestResult.Success<List<ArticleDbo>>> {
