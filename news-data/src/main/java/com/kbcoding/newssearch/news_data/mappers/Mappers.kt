@@ -11,3 +11,7 @@ internal fun ArticleDto.toArticleDbo(): ArticleDbo {
 internal fun ArticleDbo.toArticle(): Article {
     TODO()
 }
+
+internal fun ArticleDto.toArticle(): Article {
+    TODO()
+}

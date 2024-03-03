@@ -6,10 +6,11 @@ import com.kbcoding.newssearch.news_api.NewsApi
 import com.kbcoding.newssearch.news_api.models.ArticleDto
 import com.kbcoding.newssearch.news_api.models.ResponseDto
 import com.kbcoding.newssearch.news_data.domain.ArticlesRepository
+import com.kbcoding.newssearch.news_data.mappers.toArticle
 import com.kbcoding.newssearch.news_data.mappers.toArticleDbo
 import com.kbcoding.newssearch.news_data.models.Article
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -18,20 +19,31 @@ import kotlinx.coroutines.flow.onEach
 
 class ArticlesRepositoryImpl(
     private val api: NewsApi,
-    private val db: NewsDatabase
+    private val db: NewsDatabase,
+    private val mergeStrategy: MergeStrategy<RequestResult<List<Article>>>
 ) : ArticlesRepository {
     override suspend fun getArticles(): Flow<RequestResult<List<Article>>> {
 
-        val cachedAllArticles = getArticlesFromDb()
+        val cachedAllArticles: Flow<RequestResult<List<Article>>> = getArticlesFromDb()
+            .map { result ->
+                result.map { articlesDtos ->
+                    articlesDtos.map { articleDto ->
+                        articleDto.toArticle()
+                    }
+                }
+            }
 
-        val remoteArticles = getArticlesFromApi()
+        val remoteArticles: Flow<RequestResult<List<Article>>> = getArticlesFromApi()
+            .map { result ->
+                result.map { responseDto ->
+                    responseDto.articles.map { articleDto ->
+                        articleDto.toArticle()
+                    }
+                }
+            }
 
-        cachedAllArticles.map {
-
-        }
-
-        return flow {
-            //emit(RequestResult.InProgress(cachedAllArticles))
+        return cachedAllArticles.combine(remoteArticles) { cached, remote ->
+            mergeStrategy.merge(cached, remote)
         }
     }
 
@@ -55,10 +67,14 @@ class ArticlesRepositoryImpl(
         db.articlesDao.saveArticles(articlesDbos)
     }
 
-    private fun getArticlesFromDb(): Flow<RequestResult.Success<List<ArticleDbo>>> {
-        return db.articlesDao
+    private fun getArticlesFromDb(): Flow<RequestResult<List<ArticleDbo>>> {
+        val dbRequest = db.articlesDao
             .getArticles()
             .map { RequestResult.Success(it) }
+
+        val inProgress = flowOf<RequestResult<List<ArticleDbo>>>(RequestResult.InProgress())
+
+        return merge(dbRequest, inProgress)
     }
 }
 
