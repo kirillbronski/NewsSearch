@@ -1,15 +1,14 @@
 package com.kbcoding.newssearch.news_data.data
 
-sealed class RequestResult<out E: Any>(internal val data: E? = null) {
+sealed class RequestResult<out E: Any>(open val data: E? = null) {
     class InProgress<E: Any>(data: E? = null) : RequestResult<E>(data)
-    class Success<E : Any>(data: E) : RequestResult<E>(data)
+    class Success<E : Any>(override val data: E) : RequestResult<E>(data)
     class Error<E: Any>(data: E? = null, val error: Throwable? = null) : RequestResult<E>(data)
 }
-
-internal fun <I: Any, O: Any> RequestResult<I>.map(mapper: (I) -> O): RequestResult<O> {
+ fun <I: Any, O: Any> RequestResult<I>.map(mapper: (I) -> O): RequestResult<O> {
     return when (this) {
         is RequestResult.Success -> {
-            val outData: O = mapper(checkNotNull(data))
+            val outData: O = mapper(data)
             RequestResult.Success(outData)
         }
 

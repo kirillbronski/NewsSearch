@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface ArticleDao {
 
     @Query("SELECT * FROM articles")
-    fun getArticles(): Flow<List<ArticleDbo>>
+    fun getArticles(): List<ArticleDbo>
+
+    @Query("SELECT * FROM articles")
+    fun getObserveArticles(): Flow<List<ArticleDbo>>
 
     @Insert
     suspend fun saveArticles(articles: List<ArticleDbo>)
