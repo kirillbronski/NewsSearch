@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.0"
 annotation = "1.7.1"
+jakartaInjectApi = "2.0.1"
 kotlin = "1.9.22"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -20,11 +21,14 @@ appcompat = "1.6.1"
 material = "1.11.0"
 roomKtx = "2.6.1"
 ksp = "1.9.22-1.0.17"
+hiltVer = "2.51"
+daggerVer = "2.51"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+jakarta-inject-api = { module = "jakarta.inject:jakarta.inject-api", version.ref = "jakartaInjectApi" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -53,11 +57,19 @@ retrofit-serialization-converter = { module = "com.jakewharton.retrofit:retrofit
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVer" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVer" }
+
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "daggerVer" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVer" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 jetbrains-kotlin-serailization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "jetbrainsKotlinSerialization" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVer" }
 

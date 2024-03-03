@@ -77,11 +77,7 @@ internal class RequestResponseMergeStrategyImpl<T : Any> : MergeStrategy<Request
         cached: RequestResult.Success<T>,
         remote: RequestResult.Success<T>,
     ): RequestResult<T> {
-        return when {
-            remote.data != null -> RequestResult.Success(remote.data)
-            cached.data != null -> RequestResult.Success(cached.data)
-            else -> error("UnknownMergeSuccessException")
-        }
+        return RequestResult.Success(cached.data)
     }
 
     private fun merge(

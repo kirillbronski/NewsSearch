@@ -37,7 +37,7 @@ interface NewsApi {
     ): Result<ResponseDto<ArticleDto>>
 }
 
-fun newsApi(
+fun NewsApi(
     baseUrl: String,
     apiKey: String,
     okHttpClient: OkHttpClient? = null,

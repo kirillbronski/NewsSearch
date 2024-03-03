@@ -23,7 +23,7 @@ internal abstract class NewsRoomDatabase : RoomDatabase() {
     abstract fun getArticleDao(): ArticleDao
 }
 
-fun newsDatabase(applicationContext: Context): NewsDatabase {
+fun NewsDatabase(applicationContext: Context): NewsDatabase {
     val newsRoomDatabase = Room.databaseBuilder(
         checkNotNull(applicationContext.applicationContext),
         NewsRoomDatabase::class.java,

@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -18,6 +20,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "NEWS_API_KEY", "\"689627db5cd24ea4a3567efa62a092e8\"")
+        buildConfigField("String", "NEWS_BASE_URL", "\"https://newsapi.org/v2/\"")
     }
 
     buildTypes {
@@ -38,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.9"
@@ -50,6 +56,13 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+
+    implementation(projects.newsApi)
+    implementation(projects.newsData)
+    implementation(projects.database)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

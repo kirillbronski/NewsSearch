@@ -37,8 +37,11 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
 
+
     implementation(projects.database)
     implementation(projects.newsApi)
+
+    implementation(libs.jakarta.inject.api)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

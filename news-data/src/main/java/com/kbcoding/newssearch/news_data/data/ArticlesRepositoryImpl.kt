@@ -9,6 +9,7 @@ import com.kbcoding.newssearch.news_data.domain.ArticlesRepository
 import com.kbcoding.newssearch.news_data.mappers.toArticle
 import com.kbcoding.newssearch.news_data.mappers.toArticleDbo
 import com.kbcoding.newssearch.news_data.models.Article
+import jakarta.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
-class ArticlesRepositoryImpl(
+class ArticlesRepositoryImpl @Inject constructor(
     private val api: NewsApi,
     private val db: NewsDatabase,
 ) : ArticlesRepository {

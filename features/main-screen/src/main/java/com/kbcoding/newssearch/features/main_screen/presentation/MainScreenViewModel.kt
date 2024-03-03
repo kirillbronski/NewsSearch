@@ -4,20 +4,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbcoding.newssearch.features.main_screen.domain.use_cases.GetArticlesUseCase
 import com.kbcoding.newssearch.news_data.data.RequestResult
-import com.kbcoding.newssearch.news_data.data.map
 import com.kbcoding.newssearch.news_data.models.Article
-import kotlinx.coroutines.flow.MutableStateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
+import javax.inject.Provider
 
-internal class MainScreenViewModel(
-    getArticlesUseCase: GetArticlesUseCase
+@HiltViewModel
+internal class MainScreenViewModel @Inject constructor(
+    getArticlesUseCase: Provider<GetArticlesUseCase>
 ) : ViewModel() {
 
-    val mainScreenState: StateFlow<MainScreenState> = getArticlesUseCase()
+    val mainScreenState: StateFlow<MainScreenState> = getArticlesUseCase.get().invoke()
         .map { it.toMainScreenState() }
         .stateIn(viewModelScope, SharingStarted.Lazily, MainScreenState.Default)
 
