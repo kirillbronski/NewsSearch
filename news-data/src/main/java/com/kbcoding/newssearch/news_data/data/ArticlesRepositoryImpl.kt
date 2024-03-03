@@ -11,7 +11,9 @@ import com.kbcoding.newssearch.news_data.models.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
 class ArticlesRepositoryImpl(
@@ -34,13 +36,16 @@ class ArticlesRepositoryImpl(
     }
 
     private fun getArticlesFromApi(): Flow<RequestResult<ResponseDto<ArticleDto>>> {
-        return flow { emit(api.everything()) }
-            .map { result -> result.toRequestResult() }
-            .onEach { requestResult ->
-                if (requestResult is RequestResult.Success) {
-                    saveApiResponseToCache(checkNotNull(requestResult.data).articles)
+        val apiRequest = flow { emit(api.everything()) }
+            .onEach { result ->
+                if (result.isSuccess) {
+                    saveApiResponseToCache(checkNotNull(result.getOrThrow()).articles)
                 }
-            }
+            }.map { it.toRequestResult() }
+
+        val inProgress = flowOf<RequestResult<ResponseDto<ArticleDto>>>(RequestResult.InProgress())
+
+        return merge(apiRequest, inProgress)
     }
 
     private suspend fun saveApiResponseToCache(articlesDtos: List<ArticleDto>) {
