@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.retrofit.serialization.converter)
     implementation(libs.retrofit.adapters.result)
+    //implementation(libs.logging.interceptor)
 
 
 }

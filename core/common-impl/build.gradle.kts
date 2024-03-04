@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kbcoding.newssearch.news_data"
+    namespace = "com.kbcoding.newssearch.core.commonimpl"
     compileSdk = 34
 
     defaultConfig {
@@ -35,14 +35,6 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.kotlinx.coroutines.android)
-
-
-    implementation(projects.database)
-    implementation(projects.newsApi)
-    implementation(projects.core.commonImpl)
-
-    implementation(libs.jakarta.inject.api)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

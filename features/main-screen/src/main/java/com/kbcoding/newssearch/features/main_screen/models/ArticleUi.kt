@@ -9,5 +9,4 @@ internal data class ArticleUi(
     val description: String,
     val url: String,
     val urlToImage: String,
-    val publishedAt: Date,
 )

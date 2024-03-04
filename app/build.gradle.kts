@@ -65,8 +65,10 @@ dependencies {
     implementation(projects.newsData)
     implementation(projects.features.mainScreen)
     implementation(projects.core.common)
+    implementation(projects.core.commonImpl)
 
     compileOnly(libs.retrofit.adapters.result)
+    implementation(libs.logging.interceptor)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -1,5 +1,6 @@
 package com.kbcoding.newssearch.news_data.data
 
+import com.kbcoding.newssearch.core.commonimpl.Logger
 import com.kbcoding.newssearch.database.NewsDatabase
 import com.kbcoding.newssearch.database.models.ArticleDbo
 import com.kbcoding.newssearch.news_api.NewsApi
@@ -9,11 +10,11 @@ import com.kbcoding.newssearch.news_data.domain.ArticlesRepository
 import com.kbcoding.newssearch.news_data.mappers.toArticle
 import com.kbcoding.newssearch.news_data.mappers.toArticleDbo
 import com.kbcoding.newssearch.news_data.models.Article
-import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.onEach
 class ArticlesRepositoryImpl(
     private val api: NewsApi,
     private val db: NewsDatabase,
+    private val log: Logger
 ) : ArticlesRepository {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -64,6 +66,8 @@ class ArticlesRepositoryImpl(
             .onEach { result ->
                 if (result.isSuccess) {
                     saveApiResponseToCache(result.getOrThrow().articles)
+                } else if (result.isFailure) {
+                    log.e(TAG, "Error getting from API ${result.exceptionOrNull()}")
                 }
             }.map { it.toRequestResult() }
 
@@ -92,6 +96,10 @@ class ArticlesRepositoryImpl(
 //            .map { RequestResult.Success(it) }
         val dbRequest = db.articlesDao::getArticles.asFlow()
             .map { RequestResult.Success(it) }
+            .catch {
+                log.e(TAG, "Error getting from database: ${it.message}")
+                RequestResult.Error<List<ArticleDbo>>(error = it)
+            }
             .flowOn(Dispatchers.IO)
 
         val inProgress = flowOf<RequestResult<List<ArticleDbo>>>(RequestResult.InProgress())
@@ -103,6 +111,10 @@ class ArticlesRepositoryImpl(
                 }
             }
         }
+    }
+
+    private companion object {
+        var TAG = ArticlesRepositoryImpl::class.java.name
     }
 }
 

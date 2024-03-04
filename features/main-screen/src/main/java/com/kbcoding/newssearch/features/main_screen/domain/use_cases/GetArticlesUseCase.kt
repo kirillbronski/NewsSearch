@@ -25,12 +25,11 @@ internal class GetArticlesUseCase @Inject constructor(
 
     private fun Article.toUiArticle(): ArticleUi {
         return ArticleUi(
-            id = id,
+            id = cacheId,
             title = title,
             description = description,
             url = url,
             urlToImage = urlToImage,
-            publishedAt = publishedAt
         )
     }
 }

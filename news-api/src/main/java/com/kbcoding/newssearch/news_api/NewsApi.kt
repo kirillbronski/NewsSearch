@@ -25,9 +25,9 @@ interface NewsApi {
     /**
      * API details [here] (https://newsapi.org/docs/endpoints/everything)
      */
-    @GET("/everything")
+    @GET("everything")
     suspend fun everything(
-        @Query("q") query: String? = null,
+        @Query("q") query: String? = "android",
         @Query("from") from: Date? = null,
         @Query("to") to: Date? = null,
         @Query("languages") languageDtos: List<@JvmSuppressWildcards LanguageDto>? = null,

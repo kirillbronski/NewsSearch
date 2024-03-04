@@ -114,7 +114,6 @@ private class ArticlesProvider : PreviewParameterProvider<List<ArticleUi>> {
                 description = "New canary version Android IDE has been released",
                 url = "",
                 urlToImage = "",
-                publishedAt = Date()
             ),
             ArticleUi(
                 id = 2,
@@ -122,7 +121,6 @@ private class ArticlesProvider : PreviewParameterProvider<List<ArticleUi>> {
                 description = "New canary version Android IDE has been released 2",
                 url = "",
                 urlToImage = "",
-                publishedAt = Date()
             )
         )
     )
