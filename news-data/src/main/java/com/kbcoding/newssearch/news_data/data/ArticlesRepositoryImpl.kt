@@ -10,6 +10,7 @@ import com.kbcoding.newssearch.news_data.mappers.toArticle
 import com.kbcoding.newssearch.news_data.mappers.toArticleDbo
 import com.kbcoding.newssearch.news_data.models.Article
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -17,11 +18,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
-class ArticlesRepositoryImpl @Inject constructor(
+class ArticlesRepositoryImpl(
     private val api: NewsApi,
     private val db: NewsDatabase,
 ) : ArticlesRepository {
@@ -90,6 +92,7 @@ class ArticlesRepositoryImpl @Inject constructor(
 //            .map { RequestResult.Success(it) }
         val dbRequest = db.articlesDao::getArticles.asFlow()
             .map { RequestResult.Success(it) }
+            .flowOn(Dispatchers.IO)
 
         val inProgress = flowOf<RequestResult<List<ArticleDbo>>>(RequestResult.InProgress())
 

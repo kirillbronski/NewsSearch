@@ -61,8 +61,12 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(projects.newsApi)
-    implementation(projects.newsData)
     implementation(projects.database)
+    implementation(projects.newsData)
+    implementation(projects.features.mainScreen)
+    implementation(projects.core.common)
+
+    compileOnly(libs.retrofit.adapters.result)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

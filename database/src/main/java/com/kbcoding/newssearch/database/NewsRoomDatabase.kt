@@ -29,7 +29,6 @@ fun NewsDatabase(applicationContext: Context): NewsDatabase {
         NewsRoomDatabase::class.java,
         name = "news.db"
     )
-        .addTypeConverter(DateTypeConverters())
         .build()
     return NewsDatabase(newsRoomDatabase)
 }
