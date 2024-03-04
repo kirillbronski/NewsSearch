@@ -6,8 +6,9 @@ import com.kbcoding.newssearch.news_data.domain.ArticlesRepository
 import com.kbcoding.newssearch.news_data.models.Article
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class GetArticlesUseCase(
+class GetArticlesUseCase @Inject constructor(
     private val repository: ArticlesRepository
 ) {
     operator fun invoke(): Flow<RequestResult<List<Article>>> {
