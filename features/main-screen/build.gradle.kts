@@ -57,8 +57,6 @@ dependencies {
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.jakarta.inject.api)
-
     implementation(projects.database)
     implementation(projects.newsApi)
     implementation(projects.newsData)

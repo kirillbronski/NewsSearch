@@ -1,6 +1,6 @@
 package com.kbcoding.newssearch.news_data.data
 
-import com.kbcoding.newssearch.core.commonimpl.Logger
+import com.kbcoding.newssearch.core.common.utils.Logger
 import com.kbcoding.newssearch.database.NewsDatabase
 import com.kbcoding.newssearch.database.models.ArticleDbo
 import com.kbcoding.newssearch.news_api.NewsApi
@@ -23,8 +23,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class ArticlesRepositoryImpl(
+class ArticlesRepositoryImpl @Inject constructor(
     private val api: NewsApi,
     private val db: NewsDatabase,
     private val log: Logger
@@ -67,7 +68,7 @@ class ArticlesRepositoryImpl(
                 if (result.isSuccess) {
                     saveApiResponseToCache(result.getOrThrow().articles)
                 } else if (result.isFailure) {
-                    log.e(TAG, "Error getting from API. Cause = ${result.exceptionOrNull()}")
+                    log.e(TAG, "Error getting from API. Cause = ${result.exceptionOrNull()}", null)
                 }
             }.map { it.toRequestResult() }
 

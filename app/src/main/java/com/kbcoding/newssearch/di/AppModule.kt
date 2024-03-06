@@ -3,11 +3,12 @@ package com.kbcoding.newssearch.di
 import android.content.Context
 import com.kbcoding.newssearch.BuildConfig
 import com.kbcoding.newssearch.core.common.utils.AppCoroutineDispatchers
-import com.kbcoding.newssearch.core.commonimpl.Logger
+import com.kbcoding.newssearch.core.common.utils.Logger
 import com.kbcoding.newssearch.database.NewsDatabase
 import com.kbcoding.newssearch.news_api.NewsApi
 import com.kbcoding.newssearch.news_data.data.ArticlesRepositoryImpl
 import com.kbcoding.newssearch.news_data.domain.ArticlesRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,27 +50,27 @@ object AppModule {
         return NewsDatabase(context)
     }
 
-    @Provides
-    @Singleton
-    fun provideLogger(): Logger {
-        return Logger()
-    }
-
-    @Provides
-    @Singleton
-    fun provideArticlesRepository(
-        newsApi: NewsApi,
-        database: NewsDatabase,
-        logger: Logger
-    ): ArticlesRepository {
-        return ArticlesRepositoryImpl(newsApi, database, logger)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideArticlesRepository(
+//        newsApi: NewsApi,
+//        database: NewsDatabase,
+//        logger: Logger
+//    ): ArticlesRepository {
+//        return ArticlesRepositoryImpl(newsApi, database, logger)
+//    }
 
     @Provides
     @Singleton
     fun provideAppCoroutineDispatchers(): AppCoroutineDispatchers {
         return AppCoroutineDispatchers()
     }
+
+//    @Provides
+//    @Singleton
+//    fun provideAndroidLogger(): LogCatLogger {
+//        return Logger()
+//    }
 
 //    @Provides
 //    fun provideArticlesRepository(

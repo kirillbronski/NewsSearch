@@ -42,7 +42,7 @@ dependencies {
     implementation(projects.newsApi)
     implementation(projects.core.commonImpl)
 
-    implementation(libs.jakarta.inject.api)
+    implementation(libs.javax.inject)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

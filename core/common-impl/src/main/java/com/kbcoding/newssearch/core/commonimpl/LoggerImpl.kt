@@ -1,17 +1,19 @@
 package com.kbcoding.newssearch.core.commonimpl
 
 import android.util.Log
+import com.kbcoding.newssearch.core.common.utils.Logger
+import javax.inject.Inject
 
 /**
- * Default implementation of [Logger] which sends all logs to the LogCat.
+ * Default implementation of [LoggerImpl] which sends all logs to the LogCat.
  */
-class Logger {
+class LoggerImpl @Inject constructor() : Logger {
 
-    fun d(tag: String, message: String) {
+    override fun d(tag: String, message: String) {
         Log.d(tag, message)
     }
 
-    fun e(tag: String, message: String?, exception: Throwable? = null) {
+    override fun e(tag: String, message: String?, exception: Throwable?) {
         Log.e(tag, message, exception)
     }
 
