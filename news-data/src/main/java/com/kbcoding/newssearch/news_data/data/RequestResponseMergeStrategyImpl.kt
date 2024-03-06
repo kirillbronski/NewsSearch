@@ -45,7 +45,7 @@ internal class RequestResponseMergeStrategyImpl<T : Any> : MergeStrategy<Request
                 merge(cached, remote)
             }
 
-            else -> error("UnknownMergeStrategyException")
+            else -> error("Unimplemented branch right=$cached left=$remote")
         }
     }
 
@@ -59,6 +59,7 @@ internal class RequestResponseMergeStrategyImpl<T : Any> : MergeStrategy<Request
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun merge(
         cached: RequestResult.InProgress<T>,
         remote: RequestResult.Success<T>,
@@ -73,13 +74,15 @@ internal class RequestResponseMergeStrategyImpl<T : Any> : MergeStrategy<Request
         return RequestResult.Error(data = cached.data, error = remote.error)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun merge(
         cached: RequestResult.Success<T>,
         remote: RequestResult.Success<T>,
     ): RequestResult<T> {
-        return RequestResult.Success(cached.data)
+        return RequestResult.Success(remote.data)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun merge(
         cached: RequestResult.Success<T>,
         remote: RequestResult.InProgress<T>,
@@ -104,17 +107,19 @@ internal class RequestResponseMergeStrategyImpl<T : Any> : MergeStrategy<Request
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun merge(
         cached: RequestResult.Error<T>,
         remote: RequestResult.Success<T>,
     ): RequestResult<T> {
-        return RequestResult.Error(data = remote.data, error = cached.error)
+        return RequestResult.Success(data = remote.data)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun merge(
         cached: RequestResult.Error<T>,
         remote: RequestResult.InProgress<T>,
     ): RequestResult<T> {
-        return RequestResult.Error(data = remote.data, error = cached.error)
+        return RequestResult.InProgress(data = remote.data)
     }
 }
