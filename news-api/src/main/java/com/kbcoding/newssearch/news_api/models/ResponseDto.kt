@@ -10,8 +10,11 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ResponseDto<E>(
-    @SerialName("status") val status: String,
-    @SerialName("totalResult") val totalResult: Int,
-    @SerialName("articles") val articles: List<E>,
+    @SerialName("status")
+    val status: String,
+    @SerialName("totalResults")
+    val totalResult: Int,
+    @SerialName("articles")
+    val articles: List<E>,
 ) {
 }

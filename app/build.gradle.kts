@@ -1,3 +1,7 @@
+import java.io.FileInputStream
+import java.io.IOException
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -21,9 +25,23 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "NEWS_API_KEY", "\"689627db5cd24ea4a3567efa62a092e8\"")
+        val localPropertiesFile = File("local.properties")
+        val localProperties = Properties()
+
+        try {
+            FileInputStream(localPropertiesFile).use { fileInputStream ->
+                localProperties.load(fileInputStream)
+                val apiKey = localProperties.getProperty("NEWS_API_KEY")
+                buildConfigField("String", "NEWS_API_KEY", "\"${apiKey}\"")
+            }
+        } catch (e: IOException) {
+            println("Error reading local.properties file: ${e.message}")
+        }
+
         buildConfigField("String", "NEWS_BASE_URL", "\"https://newsapi.org/v2/\"")
     }
+
+
 
     buildTypes {
         release {

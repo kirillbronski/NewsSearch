@@ -67,7 +67,7 @@ class ArticlesRepositoryImpl(
                 if (result.isSuccess) {
                     saveApiResponseToCache(result.getOrThrow().articles)
                 } else if (result.isFailure) {
-                    log.e(TAG, "Error getting from API ${result.exceptionOrNull()}")
+                    log.e(TAG, "Error getting from API. Cause = ${result.exceptionOrNull()}")
                 }
             }.map { it.toRequestResult() }
 
@@ -97,7 +97,7 @@ class ArticlesRepositoryImpl(
         val dbRequest = db.articlesDao::getArticles.asFlow()
             .map { RequestResult.Success(it) }
             .catch {
-                log.e(TAG, "Error getting from database: ${it.message}")
+                log.e(TAG, "Error getting from database. Cause = ${it.message}")
                 RequestResult.Error<List<ArticleDbo>>(error = it)
             }
             .flowOn(Dispatchers.IO)
