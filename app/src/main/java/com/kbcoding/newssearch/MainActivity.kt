@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kbcoding.newssearch.features.main_screen.presentation.MainScreen
-import com.kbcoding.newssearch.ui.theme.NewsSearchTheme
+import com.kbcoding.uikit.ui.theme.NewsSearchTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,7 +41,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    NewsSearchTheme {
+    com.kbcoding.uikit.ui.theme.NewsSearchTheme {
         Greeting("Android")
     }
 }

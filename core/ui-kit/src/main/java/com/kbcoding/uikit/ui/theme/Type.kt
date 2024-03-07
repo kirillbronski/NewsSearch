@@ -1,4 +1,4 @@
-package com.kbcoding.newssearch.ui.theme
+package com.kbcoding.uikit.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

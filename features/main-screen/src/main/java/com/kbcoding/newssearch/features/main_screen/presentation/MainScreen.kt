@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,8 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kbcoding.newssearch.features.main_screen.models.ArticleUi
-import com.kbcoding.newssearch.news_data.models.Article
-import java.util.Date
+import com.kbcoding.uikit.ui.theme.NewsSearchTheme
 
 @Composable
 fun MainScreen() {
@@ -35,47 +33,56 @@ internal fun MainScreen(
     viewModel: MainScreenViewModel
 ) {
     val state by viewModel.state.collectAsState()
+    val currentState = state
 
-    when (val currentState = state) {
-        is MainScreenState.Default -> DefaultScreen()
-        is MainScreenState.Error -> ArticlesWithError(
-            currentState.articles,
-            currentState.errorMessage
+    if (currentState is MainScreenState.Default) {
+        DefaultScreen()
+    } else {
+        MainContent(currentState)
+    }
+}
+
+@Composable
+private fun MainContent(currentState: MainScreenState) {
+    Column {
+        if (currentState is MainScreenState.Error) {
+            ErrorMessage(currentState)
+        }
+        if (currentState is MainScreenState.Loading) {
+            ProgressIndicator()
+        }
+        if (currentState.articles != null) {
+            Articles(currentState.articles)
+        }
+    }
+}
+
+@Composable
+private fun ErrorMessage(currentState: MainScreenState.Error) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(NewsSearchTheme.colorScheme.error)
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = currentState.errorMessage ?: "Articles with error",
+            color = NewsSearchTheme.colorScheme.onError
         )
-        is MainScreenState.Loading -> ArticlesDuringUpdate(currentState.articles ?: emptyList())
-        is MainScreenState.Success -> Articles(currentState.articles)
     }
 }
 
 @Composable
-private fun ArticlesWithError(articles: List<ArticleUi>?, errorMessage: String?) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.error),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = errorMessage ?: "Error", color = MaterialTheme.colorScheme.onError)
-        }
-        if (articles != null) {
-            Articles(articles)
-        }
+private fun ProgressIndicator() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
     }
-}
-
-@Composable
-private fun ArticlesDuringUpdate(articles: List<ArticleUi>?) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Box(modifier = Modifier.padding(8.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-        if (articles != null) {
-            Articles(articles)
-        }
-    }
-
 }
 
 @Composable

@@ -60,6 +60,7 @@ dependencies {
     implementation(projects.database)
     implementation(projects.newsApi)
     implementation(projects.newsData)
+    implementation(projects.core.uiKit)
 
     testImplementation(libs.junit)
 
