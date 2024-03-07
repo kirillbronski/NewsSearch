@@ -86,7 +86,7 @@ dependencies {
     implementation(projects.core.commonImpl)
 
     compileOnly(libs.retrofit.adapters.result)
-    implementation(libs.logging.interceptor)
+    debugImplementation(libs.logging.interceptor)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

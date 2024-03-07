@@ -3,19 +3,14 @@ package com.kbcoding.newssearch.di
 import android.content.Context
 import com.kbcoding.newssearch.BuildConfig
 import com.kbcoding.newssearch.core.common.utils.AppCoroutineDispatchers
-import com.kbcoding.newssearch.core.common.utils.Logger
 import com.kbcoding.newssearch.database.NewsDatabase
 import com.kbcoding.newssearch.news_api.NewsApi
-import com.kbcoding.newssearch.news_data.data.ArticlesRepositoryImpl
-import com.kbcoding.newssearch.news_data.domain.ArticlesRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 @Module
@@ -24,19 +19,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient? {
-        return if (BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-            OkHttpClient().newBuilder().addInterceptor(logging).build()
-        } else {
-            null
-        }
-    }
-
-    @Provides
-    @Singleton
-    fun provideNewsApi(okHttpClient: OkHttpClient?): NewsApi {
+    fun provideNewsApi(okHttpClient: OkHttpClient): NewsApi {
         return NewsApi(
             baseUrl = BuildConfig.NEWS_BASE_URL,
             apiKey = BuildConfig.NEWS_API_KEY,
