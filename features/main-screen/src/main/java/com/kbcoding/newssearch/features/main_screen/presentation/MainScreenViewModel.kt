@@ -24,7 +24,7 @@ internal class MainScreenViewModel @Inject constructor(
 
     private fun RequestResult<List<ArticleUi>>.toMainScreenState(): MainScreenState {
         return when (this) {
-            is RequestResult.Error -> MainScreenState.Error(errorMessage = error?.message)
+            is RequestResult.Error -> MainScreenState.Error(articles = data, errorMessage = error?.message)
             is RequestResult.InProgress -> MainScreenState.Loading(data)
             is RequestResult.Success -> MainScreenState.Success(data)
         }

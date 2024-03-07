@@ -42,7 +42,6 @@ internal fun MainScreen(
             currentState.articles,
             currentState.errorMessage
         )
-
         is MainScreenState.Loading -> ArticlesDuringUpdate(currentState.articles ?: emptyList())
         is MainScreenState.Success -> Articles(currentState.articles)
     }
